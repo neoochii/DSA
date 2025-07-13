@@ -2,17 +2,17 @@ class Solution {
     public List<Boolean> kidsWithCandies(int[] candies, int extraCandies) {
 
         ArrayList<Boolean> result = new ArrayList<Boolean>();
-        int max = Arrays.stream(candies).max().getAsInt(); 
-
+        int max = 0;
         for(int a : candies){
-            if(a+extraCandies >= max ){
-                result.add(true);
+            if(a > max){
+                max =a;
             }
-            else{
-                result.add(false);
-            }
+        }
+        for(int a :candies){
+            result.add( a + extraCandies >= max);
         }
         return result;
 
+       
     }
 }
