@@ -1,34 +1,23 @@
 class Solution {
     public int findMaxValueOfEquation(int[][] points, int k) {
-      int n = points.length;
-        int max = Integer.MIN_VALUE;
+         int ans = Integer.MIN_VALUE;
+        int left = 0;
+        int right = 1;
 
-        // Each element in deque is an int[] = {x, y - x}
-        Deque<int[]> dq = new ArrayDeque<>();
+        while (left < points.length) {
+            if (right < left + 1) right = left + 1;
+            for (int j = right; j <= points.length - 1; j++) {
+                if (points[j][0] > (points[left][0] + k))
+                    break;
 
-        for (int[] point : points) {
-            int x = point[0];
-            int y = point[1];
-
-            // Remove elements from front if they are out of the k window
-            while (!dq.isEmpty() && x - dq.peekFirst()[0] > k) {
-                dq.pollFirst();
+                int sum = points[left][1] + points[j][1] + points[j][0] - points[left][0];
+                if (sum > ans) {
+                    ans = Math.max(ans, sum);
+                    right = j - 1;
+                }
             }
-
-            // If deque is not empty, update max with best candidate
-            if (!dq.isEmpty()) {
-                max = Math.max(max, y + x + dq.peekFirst()[1]); // y + x + (yi - xi)
-            }
-
-            // Maintain deque in decreasing order of (y - x)
-            while (!dq.isEmpty() && dq.peekLast()[1] <= y - x) {
-                dq.pollLast();
-            }
-
-            // Add current point
-            dq.offerLast(new int[]{x, y - x});
+            left++;
         }
-
-        return max;
+        return ans;
     }
 }
