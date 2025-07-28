@@ -8,10 +8,12 @@ class Solution {
                 i++;  }
              else {
                 k--; 
-               
+                if (k == 0) {
+                    return num;
+                }
             }
             num++;
         }
-        return num-1;
+        return num;
     }
 }
