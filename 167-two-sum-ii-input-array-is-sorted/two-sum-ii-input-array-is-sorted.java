@@ -1,24 +1,19 @@
 class Solution {
-    public int[] twoSum(int[] numbers, int target) {
-      
-        int start =0;
-        int second = numbers.length -1;
+    public int[] twoSum(int[] nums, int target) {
+           int n = nums.length;
+        Map<Integer, Integer> mp = new HashMap<>();
 
-        while(start< second){
-               int sum = numbers[start] + numbers[second];
-            if(sum == target){
-                 return new int[] {start + 1, second + 1};
-
-            }else if(sum < target){
-                start++;
-            }else{
-                second--;
+        for (int i = 0; i < n; i++) {
+            int remaining = target - nums[i];
+            
+            if (mp.containsKey(remaining)) {
+                return new int[]{mp.get(remaining)+1, i+1};
             }
+            
+            mp.put(nums[i], i);
         }
-          return new int[] {-1, -1}; 
 
-
-       
+        return new int[]{};
         
     }
 }
