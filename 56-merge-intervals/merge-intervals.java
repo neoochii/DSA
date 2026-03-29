@@ -1,18 +1,24 @@
+import java.util.*;
+
 class Solution {
     public int[][] merge(int[][] intervals) {
-       Arrays.sort(intervals,(a,b)  ->  Integer.compare(a[0],b[0]));
-       LinkedList<int[]> merged = new LinkedList<>();
-       for(int[] interval : intervals){
-        if(merged.isEmpty() || merged.getLast()[1]  < interval[0]){
-            merged.add(interval);
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
+
+        int index = 0; // points to last merged interval
+
+        for (int i = 1; i < intervals.length; i++) {
+            // overlap case
+            if (intervals[index][1] >= intervals[i][0]) {
+                intervals[index][1] = Math.max(
+                    intervals[index][1],
+                    intervals[i][1]
+                );
+            } else {
+                index++;
+                intervals[index] = intervals[i];
+            }
         }
-        else{
-            merged.getLast()[1] = Math.max(
-                merged.getLast()[1],
-                interval[1]
-            );
-        }
-       }
-        return merged.toArray(new int[merged.size()][]);
+
+        return Arrays.copyOfRange(intervals, 0, index + 1);
     }
 }
