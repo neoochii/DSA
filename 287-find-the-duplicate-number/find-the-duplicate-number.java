@@ -1,4 +1,21 @@
 class Solution {
+      public int findDuplicate(int[] nums) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for (int num : nums) {
+            if (map.containsKey(num)) {
+                return num; // duplicate found
+            } else {
+                map.put(num, 1);
+            }
+        }
+
+        return -1; // no duplicate (though problem guarantees one)
+    
+}
+    
+
+    /*
     public int findDuplicate(int[] nums) {
         Arrays.sort(nums);
         for(int i = 0 ; i< nums.length ;i++){
@@ -14,7 +31,7 @@ class Solution {
     }
 
 
-        /*
+        
     public int findDuplicate(int[] nums) {
         int i =0;
 
