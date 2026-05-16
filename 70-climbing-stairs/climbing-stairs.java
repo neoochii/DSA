@@ -1,24 +1,20 @@
 class Solution {
-    static  int []term = new int [1000]; 
+   
     public int climbStairs(int n) {
-       
-        int[] dp = new int[ n+1];
-        return solve(n, dp);
+        if(n <= 1){
+        return n;
+      }
+      int a =0;
+      int b =1;
+      int c=0 ;
+      for(int i =0;i<n ;i++ ){
+        c = a + b;
+        a =b;
+        b =c; 
+        
+      }
+      return c;
     }
 
-    int solve(int n , int dp[]){
-         if(n < 0){
-            return 0;
-        }
-        if(n == 0){
-            return 1;
-        }
-
-        if(dp[n] != 0){
-            return dp[n];
-        }
-
-        return dp[n] = solve(n-2 , dp) + solve(n -1 , dp);
-
-    }
+   
 }
