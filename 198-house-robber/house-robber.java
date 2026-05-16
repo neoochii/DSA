@@ -1,23 +1,14 @@
 class Solution {
     public int rob(int[] nums) {
+        int prevRob = 0;
+        int maxRob = 0;
 
-        int n = nums.length;
-
-        if (n == 1) return nums[0];
-
-        int[] dp = new int[n];
-
-        dp[0] = nums[0];
-        dp[1] = Math.max(nums[0], nums[1]);
-
-        for (int i = 2; i < n; i++) {
-
-            int steal = nums[i] + dp[i - 2];
-            int skip = dp[i - 1];
-
-            dp[i] = Math.max(steal, skip);
+        for (int curValue : nums) {
+            int temp = Math.max(maxRob, prevRob + curValue);
+            prevRob = maxRob;
+            maxRob = temp;
         }
 
-        return dp[n - 1];
+        return maxRob;        
     }
 }
