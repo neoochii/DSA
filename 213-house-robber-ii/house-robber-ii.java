@@ -4,16 +4,14 @@ class Solution {
         
 
 
+       if (nums == null || nums.length == 0) return 0;
         int n = nums.length;
-        if(n == 1){
-            return nums[0];
-        }
-        int[] firstPart = Arrays.copyOfRange(nums, 0, n -1);
-         int[] secondPart = Arrays.copyOfRange(nums, 1, n);
+        if (n == 1) return nums[0];
 
 
-        int firstIndex = solve(firstPart);
-        int secondIndex = solve(secondPart);
+
+        int firstIndex = solve(nums,0,n-1);
+        int secondIndex = solve(nums,1,n);
 
         return Math.max(firstIndex,secondIndex);
 
@@ -23,12 +21,12 @@ class Solution {
                
     }
 
-   public int solve(int[] nums){
+   public int solve(int[] nums, int start , int end){
      int prevRob = 0;
         int maxRob = 0;
 
-        for (int curValue : nums) {
-            int temp = Math.max(maxRob, prevRob + curValue);
+        for (int i = start ; i< end ;i++) {
+            int temp = Math.max(maxRob, prevRob + nums[i]);
             prevRob = maxRob;
             maxRob = temp;
         }
