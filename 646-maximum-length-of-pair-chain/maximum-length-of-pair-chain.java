@@ -1,14 +1,37 @@
-class Solution {
-    int[] dp;
-    public int findLongestChain(int[][] nums) {
-       //  dp = new int[nums.length + 1][nums.length + 1];
-        int n = nums.length;
-       Arrays.sort(nums, (a, b) -> a[0] - b[0]);
-        dp = new int[n];
-        return solve(nums);
-        
-    }
-      public int solve(int[][] nums) {
+
+import java.util.*;
+
+    class Solution {
+        int[][] dp;
+        public int findLongestChain(int[][] nums) {
+            //  dp = new int[nums.length + 1][nums.length + 1];
+            int n = nums.length;
+            Arrays.sort(nums, (a, b) -> a[0] - b[0]);
+            dp = new int[n][n];
+            return solve(nums,0,-1);
+
+        }
+        public int  solve(int[][] nums,int i , int p  ){
+            int n = nums.length;
+            if(i >= n ){
+                return 0;
+            }
+            if ( p != -1 && dp[i][p] != 0) {
+                return dp[i][p];}
+
+            int take = 0;
+            if(p == -1 || nums[i][0] > nums[p][1]){
+                take = 1 + solve(nums, i+ 1 , i);
+            }
+
+            int skip = solve(nums, i+1 , p);
+            if(p != -1){
+                dp[i][p] = Math.max(take , skip);
+            }
+            return  Math.max(take , skip);
+        }
+    /*
+     public int solve(int[][] nums) {
 
         int n = nums.length;
         int max = 1;
@@ -28,25 +51,6 @@ class Solution {
         }
 
         return max;
+    } */
     }
-    /*
-     public int  solve(int[] nums,int i , int p  ){
-        int n = nums.length;
-            if(i >= n ){
-                return 0;
-            }
-              if ( p != -1 && dp[i][p] != 0) {
-            return dp[i][p];}
-          
-            int take = 0;
-            if(p == -1 || nums[i] > nums[p]){
-                take = 1 + solve(nums, i+ 1 , i);
-            }
 
-            int skip = solve(nums, i+1 , p);
-           if(p != -1){
-            dp[i][p] = Math.max(take , skip);
-           }
-             return  Math.max(take , skip);
-        } */
-}
