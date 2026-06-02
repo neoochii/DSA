@@ -1,6 +1,6 @@
 class Solution {
     public int earliestFinishTime(int[] startL, int[] durL, int[] startW, int[] durW) {
-        int minL = 3000, minW = minL, res = minW;
+        int minL =  Integer.MAX_VALUE, minW = minL, res = minW;
         int n = startL.length;
         int m = startW.length;
 
