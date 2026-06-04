@@ -1,21 +1,38 @@
 class Solution {
-    private static int MAX = 100001;
-    private static int[] dp = new int[MAX], pref = new int[MAX];
+    public int totalWaviness(int num1, int num2) {
+         
+         
 
-    static {
-        for (int i = 100; i < MAX; i++) {
-            int r = i % 10;
-            int m = (i / 10) % 10;
-            int l = (i / 100) % 10;
 
-            int isWave = m > Math.max(l, r) || m < Math.min(l, r) ? 1 : 0;
-            dp[i] = dp[i / 10] + isWave;
-            pref[i] = pref[i - 1] + dp[i];
+        int sol = 0;
+         
+
+        for(int j = num1 ; j <= num2 ; j++){
+             String s = String.valueOf(Math.abs(j));
+              int length = s.length();
+               int mid = length / 2;
+            
+
+            if(length < 3){
+                continue;
+            }
+            
+
+                for(int i = 1 ; i<= length - 2; i++){
+                    if(Character.getNumericValue(s.charAt(i)) >Character.getNumericValue(s.charAt(i-1)) &&Character.getNumericValue(s.charAt(i)) >Character.getNumericValue(s.charAt(i+1))){
+                        sol++;
+                    }
+                     if(Character.getNumericValue(s.charAt(i)) <Character.getNumericValue(s.charAt(i-1)) &&Character.getNumericValue(s.charAt(i))<Character.getNumericValue(s.charAt(i+1))){
+                        sol++;
+                    }
+                }
+
+                
+            
+
+
+
         }
-    }
-
-    public int totalWaviness(int A, int B) {
-        return pref[B] - pref[A - 1];
+        return sol;
     }
 }
-//this trick slow for java
