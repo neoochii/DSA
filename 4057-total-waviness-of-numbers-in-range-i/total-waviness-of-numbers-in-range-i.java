@@ -3,24 +3,24 @@ class Solution {
 
         int sol = 0;
 
-        for (int j = num1; j <= num2; j++) {
+        for (int num = num1; num <= num2; num++) {
 
-            String s = String.valueOf(Math.abs(j));
+            int x = Math.abs(num);
 
-            if (s.length() < 3)
-                continue;
+            if (x < 100) continue; // less than 3 digits
 
-            for (int i = 1; i < s.length() - 1; i++) {
+            while (x >= 100) {
 
-                int prev = s.charAt(i - 1) - '0';
-                int curr = s.charAt(i) - '0';
-                int next = s.charAt(i + 1) - '0';
+                int right = x % 10;
+                int curr = (x / 10) % 10;
+                int left = (x / 100) % 10;
 
-                if ((curr > prev && curr > next) ||
-                    (curr < prev && curr < next)) {
-
+                if ((curr > left && curr > right) ||
+                    (curr < left && curr < right)) {
                     sol++;
                 }
+
+                x /= 10;
             }
         }
 
