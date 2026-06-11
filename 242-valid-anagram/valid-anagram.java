@@ -1,4 +1,5 @@
 public class Solution {
+       /*
      public boolean isAnagram(String s, String t) {
         if (s.length() != t.length()) {
             return false;
@@ -11,7 +12,7 @@ public class Solution {
         return Arrays.equals(sSort, tSort);
     }
 
-      /*
+   
     public boolean isAnagram(String s, String t) {
         if (s.length() != t.length()) {
             return false;
@@ -25,7 +26,7 @@ public class Solution {
         }
         return countS.equals(countT);
     }
-  
+   */
 
      public boolean isAnagram(String s, String t) {
         if (s.length() != t.length()) {
@@ -44,5 +45,5 @@ public class Solution {
             }
         }
         return true;
-    } */
+    }
 }
