@@ -1,11 +1,19 @@
 class Solution {
 
-    private void dfs(int city, int[][] isConnected, boolean[] vis) {
-        vis[city] = true;
+    private void bfs(int[][] isConnected, int start, boolean[] vis) {
+        Queue<Integer> q = new LinkedList<>();
 
-        for (int next = 0; next < isConnected.length; next++) {
-            if (isConnected[city][next] == 1 && !vis[next]) {
-                dfs(next, isConnected, vis);
+        q.offer(start);
+        vis[start] = true;
+
+        while (!q.isEmpty()) {
+            int u = q.poll();
+
+            for (int v = 0; v < isConnected.length; v++) {
+                if (isConnected[u][v] == 1 && !vis[v]) {
+                    vis[v] = true;
+                    q.offer(v);
+                }
             }
         }
     }
@@ -14,15 +22,15 @@ class Solution {
         int n = isConnected.length;
         boolean[] vis = new boolean[n];
 
-        int provinces = 0;
+        int count = 0;
 
         for (int i = 0; i < n; i++) {
             if (!vis[i]) {
-                provinces++;
-                dfs(i, isConnected, vis);
+                bfs(isConnected, i, vis);
+                count++;
             }
         }
 
-        return provinces;
+        return count;
     }
 }
