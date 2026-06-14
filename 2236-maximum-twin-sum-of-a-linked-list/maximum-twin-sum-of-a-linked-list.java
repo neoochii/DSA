@@ -20,10 +20,15 @@ class Solution {
             current = current.next;  
         }
         int n = value.size();
+        int i = 0;
+        int j =n-1;
 
-      for(int i =0; i< value.size(); i++){
+    while( i < n){
 
         max = Math.max(max ,  value.get(i) + value.get(n - 1 - i));
+        i++;
+        j--;
+        
 
 
 
