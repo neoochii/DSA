@@ -9,6 +9,39 @@
  * }
  */
 class Solution {
+       public int pairSum(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+
+        // Find the middle of the linked list
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Reverse the second half
+        ListNode prev = null;
+        while (slow != null) {
+            ListNode nextNode = slow.next;
+            slow.next = prev;
+            prev = slow;
+            slow = nextNode;
+        }
+
+        // Find maximum twin sum
+        ListNode curr = head;
+        int result = 0;
+
+        while (prev != null) {
+            result = Math.max(result, curr.val + prev.val);
+            curr = curr.next;
+            prev = prev.next;
+        }
+
+        return result;
+
+
+    /*
  int res;
     ListNode left;
 
@@ -27,7 +60,7 @@ class Solution {
 
         
 
-        /*
+        
         int max =0;
           ListNode current = head;
 
