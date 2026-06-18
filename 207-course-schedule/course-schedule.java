@@ -1,38 +1,17 @@
 class Solution {
+    public boolean dfs(ArrayList<ArrayList<Integer>> adj, int node , boolean[] vis, boolean[] recurr){
 
-
-    public static boolean topologicalsor (  ArrayList<ArrayList<Integer>> adj, int n , int[] deg){
-           Queue<Integer> q = new LinkedList<>();
-           int count = 0;
-
-        for(int i=0 ; i< n ; i++){
-            if(deg[i] == 0 ){
-                count++;
-                q.add(i);
+        vis[node] = true;
+        recurr[node] = true;
+        for(int it : adj.get(node)){
+            if(!vis[it]  &&  dfs(adj, it , vis, recurr) ){
+               return true;
+            }else if(recurr[it]){
+                return true;
             }
         }
-
-        while(!q.isEmpty()){
-        
-            int u = q.poll();
-
-            for(int v : adj.get(u)){
-                deg[v]--;
-                if(deg[v] == 0){
-                    q.add(v);
-                    count++;
-                }
-            }
-
-
-
-        }
-
-        if(count == n){
-            return true;
-        }else{
-            return false;
-        }
+      recurr[node] = false;
+      return false;
 
 
 
@@ -40,33 +19,25 @@ class Solution {
 
 
     }
-    public boolean canFinish(int V, int[][] prerequisites) {
-       ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
-
-        for(int i = 0; i< V ; i++){
+    public boolean canFinish(int V, int[][] edg) {
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        for(int i =0 ;i < V ;i++ ){
             adj.add(new ArrayList<>());
-
         }
-        for(int[] i : prerequisites){
+        for(int[] i: edg){
             int u = i[0];
             int v = i[1];
-
-            adj.get(v).add(u);
-
+            adj.get(u).add(v);
         }
+           
+           boolean[] vis = new boolean[V];
+         Deque<Integer> stack = new ArrayDeque<>();
+         boolean[] recurr = new boolean[V];
 
-        int[] deg = new int[V];
-
-        for(int i =0; i< V ; i++){
-          for(int v: adj.get(i)){
-            deg[v]++;
-          }
-        }
-
-     
-
-        return topologicalsor(adj ,V ,deg);
-
-
+         for(int i =0 ; i< V;i++){
+            if(!vis[i]&& dfs(adj , i, vis , recurr))
+            return false;
+         }
+         return true;
     }
 }
