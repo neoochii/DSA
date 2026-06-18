@@ -1,51 +1,65 @@
 class Solution {
 
-    public int[] topologicalSort(ArrayList<ArrayList<Integer>> adj,
-                                 int n, int[] indegree) {
+    boolean dfs(ArrayList<ArrayList<Integer>> adj,
+            int node,
+            boolean[] vis,
+            boolean[] pathVis,
+            Deque<Integer> st) {
 
-        Queue<Integer> q = new LinkedList<>();
+    vis[node] = true;
+    pathVis[node] = true;
 
-        for (int i = 0; i < n; i++) {
-            if (indegree[i] == 0) {
-                q.offer(i);
-            }
+    for (int it : adj.get(node)) {
+
+        if (!vis[it]) {
+            if (dfs(adj, it, vis, pathVis, st))
+                return true;
         }
-
-        int[] ans = new int[n];
-        int idx = 0;
-
-        while (!q.isEmpty()) {
-            int u = q.poll();
-            ans[idx++] = u;
-
-            for (int v : adj.get(u)) {
-                if (--indegree[v] == 0) {
-                    q.offer(v);
-                }
-            }
+        else if (pathVis[it]) {
+            return true; // cycle found
         }
-
-        return idx == n ? ans : new int[]{};
     }
 
-    public int[] findOrder(int V, int[][] prerequisites) {
+    pathVis[node] = false;
+    st.push(node);
 
+    return false;
+}
+
+
+    public int[] findOrder(int V, int[][] edges) {
         ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
-
-        for (int i = 0; i < V; i++) {
+        for(int i =0 ; i< V ; i++){
             adj.add(new ArrayList<>());
         }
+        for(int[] i : edges){
+            int u = i[0];
+            int v = i[1];
+            adj.get(v).add(u);
+        }
+        boolean[] vis = new boolean[V];
+       boolean[] pathVis = new boolean[V];
+        Deque<Integer> st = new ArrayDeque<>();
+      
+        for (int i = 0; i < V; i++) {
+            if (!vis[i]) {
+                if (dfs(adj, i, vis, pathVis, st))
+                    return new int[0];
+            }
+        }
+      
 
-        int[] indegree = new int[V];
+  int[] res = new int[V];
+        int idx = 0;
 
-        for (int[] p : prerequisites) {
-            int course = p[0];
-            int pre = p[1];
-
-            adj.get(pre).add(course);
-            indegree[course]++;
+        while (!st.isEmpty()) {
+            res[idx++] = st.pop();
         }
 
-        return topologicalSort(adj, V, indegree);
+        return res;
+
+
+
+        
     }
 }
