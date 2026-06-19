@@ -1,45 +1,31 @@
 class Solution {
 
-    public static boolean dfs(ArrayList<ArrayList<Integer>> adj, int node, int[] colour, int colr) {
-        colour[node] = colr;
+    private boolean dfs(int[][] graph, int node, int color, int[] colours) {
+        colours[node] = color;
 
-        for (int i : adj.get(node)) {
-            if (colour[i] == colour[node]) {
+        for (int nei : graph[node]) {
+            if (colours[nei] == color) {
                 return false;
             }
 
-            if (colour[i] == -1) {
-                if (!dfs(adj, i, colour, 1 - colr)) {
-                    return false;
-                }
+            if (colours[nei] == -1 &&
+                !dfs(graph, nei, 1 - color, colours)) {
+                return false;
             }
         }
+
         return true;
     }
 
     public boolean isBipartite(int[][] graph) {
         int n = graph.length;
-
-        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            adj.add(new ArrayList<>());
-        }
-
-        // FIXED GRAPH BUILD
-        for (int i = 0; i < n; i++) {
-            for (int v : graph[i]) {
-                adj.get(i).add(v);
-            }
-        }
-
-        int[] colour = new int[n];
-        Arrays.fill(colour, -1);
+        int[] colours = new int[n];
+        Arrays.fill(colours, -1);
 
         for (int i = 0; i < n; i++) {
-            if (colour[i] == -1) {
-                if (!dfs(adj, i, colour, 0)) {
-                    return false;
-                }
+            if (colours[i] == -1 &&
+                !dfs(graph, i, 0, colours)) {
+                return false;
             }
         }
 
