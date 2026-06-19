@@ -1,16 +1,20 @@
 class Solution {
 
-    private boolean dfs(int[][] graph, int node, int color, int[] colours) {
-        colours[node] = color;
+    private boolean bfs(int[][] graph, int src, int[] colours) {
+        Queue<Integer> q = new LinkedList<>();
+        q.offer(src);
+        colours[src] = 0;
 
-        for (int nei : graph[node]) {
-            if (colours[nei] == color) {
-                return false;
-            }
+        while (!q.isEmpty()) {
+            int u = q.poll();
 
-            if (colours[nei] == -1 &&
-                !dfs(graph, nei, 1 - color, colours)) {
-                return false;
+            for (int v : graph[u]) {
+                if (colours[v] == -1) {
+                    colours[v] = 1 - colours[u];
+                    q.offer(v);
+                } else if (colours[v] == colours[u]) {
+                    return false;
+                }
             }
         }
 
@@ -23,8 +27,7 @@ class Solution {
         Arrays.fill(colours, -1);
 
         for (int i = 0; i < n; i++) {
-            if (colours[i] == -1 &&
-                !dfs(graph, i, 0, colours)) {
+            if (colours[i] == -1 && !bfs(graph, i, colours)) {
                 return false;
             }
         }
