@@ -1,4 +1,4 @@
-/* class Solution {
+class Solution {
     public int numberOfSubstrings(String s) {
         int res = 0;
         int[] p = {-1, -1, -1};
@@ -10,7 +10,8 @@
 
         return res;
     }
-} */
+} 
+/* 
 class Solution {
     public int numberOfSubstrings(String s) {
         int n = s.length();
@@ -33,4 +34,4 @@ class Solution {
         
         return result;
     }
-}
+} */
