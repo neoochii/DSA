@@ -1,18 +1,23 @@
 class Solution {
     public int smallestNumber(int n, int t) {
-        for (int i = n; i <= 100; i++) {
-            int product = 1;
-            int temp = i;
-
-            while (temp > 0) {
-                product *= temp % 10;
-                temp /= 10;
-            }
-
-            if (product % t == 0) {
+        for (int i = n; i <= n+ 10; i++) {
+          
+            if(mul(i) % t == 0){
                 return i;
             }
         }
         return -1;
+    }
+       public int mul(int num){
+        int x = 1;
+        while(num >0 ){
+             x *=  num % 10;
+             if(x == 0){
+                return 0;
+             }
+            num = num /10;
+
+        }
+        return  x;
     }
 }
