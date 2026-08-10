@@ -1,16 +1,11 @@
 class Solution {
     public int findNumbers(int[] nums) {
-         int res = 0;
-        for (int a : nums) {
-            int count = 0;
-            while (a > 0) {
+        int count = 0;
+        for(int n: nums){
+            if(String.valueOf(Math.abs(n)).length() % 2 == 0){
                 count++;
-                a /= 10;
-            }
-            if (count % 2 == 0) {
-                res++;
             }
         }
-        return res;
+        return count;
     }
 }
