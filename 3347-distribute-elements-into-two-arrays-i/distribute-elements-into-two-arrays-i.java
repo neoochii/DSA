@@ -2,23 +2,24 @@ class Solution {
     public int[] resultArray(int[] nums) {
         ArrayList<Integer> arr1 = new ArrayList<>();
         ArrayList<Integer> arr2 = new ArrayList<>();
+
         arr1.add(nums[0]);
         arr2.add(nums[1]);
 
-
-        for(int  i =2; i< nums.length ;i++){
-
-
-           if( arr1.getLast() > arr2.getLast()){
+        for (int i = 2; i < nums.length; i++) {
+            if (arr1.getLast() > arr2.getLast()) {
                 arr1.add(nums[i]);
             } else {
                 arr2.add(nums[i]);
             }
         }
-        int[] result = Stream.concat(arr1.stream(), arr2.stream())
-                     .mapToInt(Integer::intValue)
-                     .toArray();
-       return result;
 
+        int[] ans = new int[nums.length];
+        int k = 0;
+
+        for (int x : arr1) ans[k++] = x;
+        for (int x : arr2) ans[k++] = x;
+
+        return ans;
     }
 }
