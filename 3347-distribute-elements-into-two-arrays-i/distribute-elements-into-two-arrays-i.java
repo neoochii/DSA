@@ -1,21 +1,21 @@
 class Solution {
     public int[] resultArray(int[] nums) {
-        int[] nums1 = new int[nums.length];
-        int[] nums2 = new int[nums.length];
-        int n1 = 0;
-        int n2 = 0;
+        int n = nums.length;
 
-        for (int i = 0; i < nums.length; i++) {
-            if (i == 0) {
+        int[] nums1 = new int[n];
+        int[] nums2 = new int[n];
+
+        int n1 = 1;
+        int n2 = 1;
+
+        nums1[0] = nums[0];
+        nums2[0] = nums[1];
+
+        for (int i = 2; i < n; i++) {
+            if (nums1[n1 - 1] > nums2[n2 - 1]) {
                 nums1[n1++] = nums[i];
-            } else if (i == 1) {
-                nums2[n2++] = nums[i];
             } else {
-                if (nums1[n1 - 1] > nums2[n2 - 1]) {
-                    nums1[n1++] = nums[i];
-                } else {
-                    nums2[n2++] = nums[i];
-                }
+                nums2[n2++] = nums[i];
             }
         }
 
