@@ -2,14 +2,14 @@ class Solution {
     public int minimumAverageDifference(int[] nums) {
         int n = nums.length;
         long total = 0;
+        long minDiff = Long.MAX_VALUE;
+        int index = 0;
 
         for (int num : nums) {
             total += num;
         }
 
         long prefix = 0;
-        long minDiff = Long.MAX_VALUE;
-        int index = 0;
 
         for (int i = 0; i < n; i++) {
             prefix += nums[i];
