@@ -1,18 +1,11 @@
-class Solution {
-    public int maxSubarraySumCircular(int[] nums) {
-        int currMin = nums[0], currMax = nums[0], minSum = nums[0], maxSum = nums[0];
-        int totalSum = nums[0];
-        for(int i=1;i<nums.length;i++)
-        {
-            currMax = Math.max(nums[i],currMax+nums[i]);
-            maxSum = Math.max(maxSum,currMax);
-
-            currMin = Math.min(nums[i],currMin+nums[i]);
-            minSum = Math.min(currMin,minSum);
-
-            totalSum += nums[i];
+  class Solution{  public int maxSubarraySumCircular(int[] A) {
+        int total = 0, maxSum = A[0], curMax = 0, minSum = A[0], curMin = 0;
+        for (int a : A) {
+            curMax = Math.max(curMax + a, a);
+            maxSum = Math.max(maxSum, curMax);
+            curMin = Math.min(curMin + a, a);
+            minSum = Math.min(minSum, curMin);
+            total += a;
         }
-        if(minSum == totalSum) return maxSum;
-        return Math.max(maxSum, totalSum - minSum);
-    }
-}
+        return maxSum > 0 ? Math.max(maxSum, total - minSum) : maxSum;
+    }}
