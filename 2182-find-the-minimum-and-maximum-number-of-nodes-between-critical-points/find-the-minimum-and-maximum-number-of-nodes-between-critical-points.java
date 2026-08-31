@@ -9,18 +9,11 @@ class Solution {
         int firstCriticalIndex = 0;
 
         while (curr.next != null) {
-            
-            // When we see a critical point
             if ((curr.val < prev.val && curr.val < curr.next.val) ||
                 (curr.val > prev.val && curr.val > curr.next.val)) {
-
-                if (previousCriticalIndex == 0) {
-                    previousCriticalIndex = currPosition;
-                    firstCriticalIndex = currPosition;
-                } else {
-                    minDistance = Math.min(minDistance, currPosition - previousCriticalIndex);
-                    previousCriticalIndex = currPosition;
-                }
+                if (previousCriticalIndex == 0)  firstCriticalIndex = currPosition;
+                else minDistance = Math.min(minDistance, currPosition - previousCriticalIndex);
+                previousCriticalIndex = currPosition;
             }
 
             currPosition++;
@@ -28,9 +21,7 @@ class Solution {
             curr = curr.next;
         }
 
-        if (minDistance == Integer.MAX_VALUE) {
-            return new int[]{-1, -1};
-        }
+        if (previousCriticalIndex == firstCriticalIndex) return new int[]{-1, -1};
 
         int maxDistance = previousCriticalIndex - firstCriticalIndex;
         return new int[]{minDistance, maxDistance};
