@@ -1,17 +1,19 @@
 class Solution {
     public int findJudge(int n, int[][] trust) {
-       ArrayList<Integer> res = new ArrayList<>();
+     
        int[] indegree =new int[n+1];
-       int[] outdegree=new int[n+1];
+      
        for(int[] l : trust){
-        indegree[l[0]]++;
-        outdegree[l[1]]++;
-       }
-       int result = outdegree[1];
-       int ans =-1;
-       for(int i =1 ; i< outdegree.length;i++){
+        indegree[l[0]]--;
+          indegree[l[1]]++;
 
-          if( outdegree[i] == n-1 && indegree[i] ==0){
+       
+       }
+     
+       int ans =-1;
+       for(int i =1 ; i< indegree.length;i++){
+
+          if( indegree[i] == n-1 ){
            
             ans = i;
 
