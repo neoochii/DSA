@@ -1,39 +1,32 @@
-import java.util.HashSet;
-import java.util.Arrays;
-import java.util.ArrayList;
-
 class SummaryRanges {
-  
-    HashSet<Integer> st = new HashSet<>();
+    Set<Integer> st;
 
     public SummaryRanges() {
-        st.clear();
+        st = new HashSet<>();
     }
-    
+
     public void addNum(int value) {
         st.add(value);
     }
-    
-    public int[][] getIntervals() {
-        int[] nums = st.stream().mapToInt(Integer::intValue).toArray();
-        Arrays.sort(nums);
 
-        // 2. Fixed type: changed ArrayList<Integer<Integer>> to ArrayList<int[]>
-        ArrayList<int[]> result = new ArrayList<>();
-        int n = nums.length;
-        
+    public List<List<Integer>> getIntervals() {
+        List<Integer> nums = new ArrayList<>(st);
+        Collections.sort(nums);
+
+        List<List<Integer>> result = new ArrayList<>();
+
+        int n = nums.size();
+
         for (int i = 0; i < n; i++) {
-            int left = nums[i];
-            
-            // 3. Fixed Out of Bounds: Added (i + 1 < n) check before accessing nums[i + 1]
-            while (i  < n -1 && nums[i] + 1 == nums[i + 1]) {
+            int start = nums.get(i);
+
+            while (i < n - 1 && nums.get(i) + 1 == nums.get(i + 1)) {
                 i++;
             }
-            // 4. Fixed syntax: Used standard array initialization syntax
-            result.add(new int[]{left, nums[i]});
+
+            result.add(Arrays.asList(start, nums.get(i)));
         }
-        
-        // 5. Fixed return type: Converted the ArrayList<int[]> back to a 2D int[][] array
-        return result.toArray(new int[result.size()][]);
+
+        return result;
     }
 }
