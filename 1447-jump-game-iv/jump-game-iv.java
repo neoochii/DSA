@@ -61,7 +61,7 @@ class Solution {
                 
                 //If you don't erase it, you may be again checking for it
                 //in future. It will cause TLE
-                mp.remove(arr[curr]);
+             
             }
             
             steps++;
