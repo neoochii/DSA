@@ -3,24 +3,24 @@ class Solution {
         int start =0;
         int count =0;
 
-        int[] arr = new int[26];
-        for(int end =0; end < s.length(); end++){
-            arr[s.charAt(end) - 'a']++;
-            int range = end- start +1;
-            if(range == 3){
-                if(isGoodString(arr)){
-                    count++;
-                }
-                arr[s.charAt(start++) - 'a']--;
-             
+        int[] a= new int[26];
+
+        for(int i =0; i< s.length();i++){
+            a[s.charAt(i) - 'a']++;
+            int size = i - start +1;
+            
+            if(size== 3){
+            if(isGood(a)){
+                count++;
             }
+            a[s.charAt(start++)- 'a']--;}
         }
+
         return count;
     }
-
-    private boolean isGoodString(int[] arr){
-        for(int i =0; i< 26;i++){
-            if(arr[i]> 1){
+    private boolean isGood(int[] a){
+        for(int i =0; i< a.length ;i++){
+            if(a[i] > 1){
                 return false;
             }
         }
