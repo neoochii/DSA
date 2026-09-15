@@ -1,28 +1,57 @@
 class Solution {
-    public int maxPalindromes(String s, int k) {
-        int n = s.length();
-        if (k == 1)
-            return n;
+    int n ;
+     int[][] t = new int[2001][2001];
 
-        int res = 0;
+    public int solve( String  s , int k  , int i, int j ){
+       int take =0;
+       int grow=0;
+       int slide=0;
+ 
+    if(i >= n || j>= n){
+        return 0;
+    }
+     if (t[i][j] != -1)
+            return t[i][j];
 
-        for (int i = 0; i <= n - k; i++) {
-            if (check(s, i, i + k - 1)) {
-                res++;
-                i += k - 1;
-            } else if (i < n - k && check(s, i, i + k)) {
-                res++;
-                i += k;
-            }
-        }
+         if( isPal(s, i , j)){
+             take = 1 + solve(s, k,j+1,j+k );
+             grow = solve(s,k,i, j+1);
+             slide = solve(s,k,i+1, j+1);
+              return  t[i][j] = Math.max(take, Math.max(grow ,slide));
 
-        return res;
+
+
+
+         }
+           grow = solve(s,k,i, j+1);
+             slide = solve(s,k,i+1, j+1);
+
+            return  t[i][j]=  Math.max(grow ,slide);
+           
+       
     }
 
-    boolean check(String s, int l, int r) {
-        for (; l < r; l++, r--)
-            if (s.charAt(l) != s.charAt(r))
-                return false;
+
+    public int maxPalindromes(String s, int k) {
+        n = s.length();
+        if(k ==1){
+            return n;
+        }
+         
+        for (int[] row : t) Arrays.fill(row, -1);
+
+        return solve(s, k, 0,k-1);
+        
+    }
+    public boolean isPal(String s,int i , int k){
+     
+        while(i <k){
+            if(s.charAt(i) != s.charAt(k)) return false;
+
+            i++;
+            k--;
+           
+        }
         return true;
     }
 }
